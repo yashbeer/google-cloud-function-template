@@ -5,13 +5,13 @@ If you are looking for a boilerplate code for [Google Cloud Function](https://cl
 ### What can this repository do? ###
 
 * Get you started quickly with `Google Cloud Functions`
-* Has provision for a basic middleware (like cors and auth)
-* Uses `@google-cloud/functions-framework` for rapid local development
-* Includes deployment script `deploy_to_cloud.sh`
+* Has provision for a basic middleware (like auth and cors)
+* Uses `@google-cloud/functions-framework` for local development
+* Includes deployment script `deploy-to-cloud.sh`
 
 ### How to set up on local? ###
 
-* Clone this project
+* Clone this template project
 * Rename and go inside
 * On your terminal, run this command: `npm install`
 * Then run this command: `npm run dev`
@@ -20,16 +20,15 @@ If you are looking for a boilerplate code for [Google Cloud Function](https://cl
 ### How to deploy? ###
 
 * Setup in your terminal, [Gcloud SDK](https://cloud.google.com/sdk/docs/quickstart)
-* Edit file `deploy_to_cloud.sh`
+* Edit file `deploy-to-cloud.sh`
 * Replace `nameofyourproject` with the actual *name-of-your-project*, for example: `image_resizer`
-* On your terminal, Run `./deploy_to_cloud.sh`
+* On your terminal, Run `./deploy-to-cloud.sh`
 * Wait for a couple of minutes, the project should be deployed on Google cloud functions
 * Check whether it's running properly at the [console](https://cloud.google.com/functions/)
 
 ### Contribution guidelines ###
 
-* Kindly help me write some `tests`
-* Any suggestions are welcome!
+* Kindly suggest the improvements!
 
 ### Best way to reach me? ###
 
