@@ -9,7 +9,7 @@ exports.main = async(req, res) => {
 
 function index(req, res){
 	
-	//routes
+	// routes
 	switch(req.url.split('/')[1])
 	{
 		/*
@@ -20,6 +20,7 @@ function index(req, res){
 			functions.hello(req, res);
 			break;
 		}
+
 		default: 
 		{
 			functions.default(req, res);
