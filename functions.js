@@ -1,8 +1,14 @@
+const index = (req, res) => {
+  // Your application logic comes here
+  return res.status(200).json({ code: 200, message: 'Success' })
+}
+
+const hello = (req, res) => {
+  // Your application logic comes here
+  return res.status(200).json({ code: 200, message: 'Success' })
+}
+
 module.exports = {
-  default: async function (req, res) {
-    return res.status(404).json({ code: 404, message: 'Bad URL' });
-  },
-  hello: async function (req, res) {
-    return res.status(200).json({ code: 200, message: 'Success' })
-  }
+  index,
+  hello,
 }

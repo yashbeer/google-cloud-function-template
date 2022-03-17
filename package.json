@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "pretest": "npx eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx @google-cloud/functions-framework --target=main --port=8081"
   },
@@ -13,6 +14,7 @@
     "axios": "^0.21.1"
   },
   "devDependencies": {
-    "@google-cloud/functions-framework": "^1.7.1"
+    "@google-cloud/functions-framework": "^1.7.1",
+    "eslint": "^8.11.0"
   }
 }

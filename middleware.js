@@ -1,6 +1,6 @@
 const middleware = async (req, res, next) => {
     try {
-        console.log("Inside middleware")
+        console.log('Inside middleware')
         
         auth(req, res, next) // call auth
     }
@@ -11,7 +11,7 @@ const middleware = async (req, res, next) => {
 
 const auth = async (req, res, next) => {
     try {
-        console.log("Inside auth")
+        console.log('Inside auth')
         
         cors(req, res, next) // call cors
     }
@@ -22,14 +22,14 @@ const auth = async (req, res, next) => {
 
 const cors = async (req, res, next) => {
     try {
-        console.log("Inside cors")
+        console.log('Inside cors')
         
         res.set('Access-Control-Allow-Origin', '*')
         if (req.method === 'OPTIONS') {
             // Set for OPTIONS requests
-            res.set('Access-Control-Allow-Methods', 'GET');
-            res.set('Access-Control-Allow-Headers', 'Content-Type');
-            res.set('Access-Control-Max-Age', '3600');
+            res.set('Access-Control-Allow-Methods', 'GET')
+            res.set('Access-Control-Allow-Headers', 'Content-Type')
+            res.set('Access-Control-Max-Age', '3600')
         }
         
         next(req, res) // callback to index function
