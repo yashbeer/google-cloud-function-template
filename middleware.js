@@ -32,7 +32,7 @@ const cors = async (req, res, next) => {
       res.set('Access-Control-Max-Age', '3600')
     }
     
-    next(req, res) // call entry function back
+    next(req, res) // call index function back
   }
   catch(e) {
     return res.status(500).json({ error:{code:500, message:'Something went wrong at cors'} })

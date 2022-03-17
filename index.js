@@ -2,7 +2,7 @@ const middleware = require('./middleware')
 const functions = require('./functions')
 
 exports.main = async(req, res) => {
-  middleware(req, res, index) // middleware --> back to entry function
+  middleware(req, res, index) // middleware --> back to index function below
 }
 
 function index(req, res) {
