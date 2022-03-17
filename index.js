@@ -10,7 +10,7 @@ function index(req, res) {
   switch(req.url.split('/')[1]) {
     // https://google-cloud-function.com/
     case '': {
-      functions.root(req, res)
+      functions.base(req, res)
       break
     }
     // https://google-cloud-function.com/hello

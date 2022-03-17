@@ -1,6 +1,6 @@
-const root = (req, res) => {
+const base = (req, res) => {
   // Your application logic comes here
-  return res.status(200).json({ code: 200, message: 'This is your default route' })
+  return res.status(200).json({ code: 200, message: 'This is your base route' })
 }
 
 const hello = (req, res) => {
@@ -13,7 +13,7 @@ const notFound = (req, res) => {
 }
 
 module.exports = {
-  root,
+  base,
   hello,
   notFound
 }
