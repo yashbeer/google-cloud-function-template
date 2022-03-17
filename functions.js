@@ -1,4 +1,4 @@
-const index = (req, res) => {
+const root = (req, res) => {
   // Your application logic comes here
   return res.status(200).json({ code: 200, message: 'This is your default route' })
 }
@@ -13,7 +13,7 @@ const notFound = (req, res) => {
 }
 
 module.exports = {
-  index,
+  root,
   hello,
   notFound
 }
