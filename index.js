@@ -1,11 +1,10 @@
-const axios = require('axios');
-const middleware = require('./middleware');
-const functions = require('./functions');
+const middleware = require('./middleware')
+const functions = require('./functions')
 
 
 exports.main = async(req, res) => {
-    middleware(req, res, index); // middleware --> back to index function
-};
+    middleware(req, res, index) // middleware --> back to index function
+}
 
 function index(req, res){
 	
@@ -17,13 +16,13 @@ function index(req, res){
 		*/
 		case 'hello':
 		{
-			functions.hello(req, res);
-			break;
+			functions.hello(req, res)
+			break
 		}
 
 		default: 
 		{
-			functions.default(req, res);
+			functions.default(req, res)
 		}
 	}
-};
+}
