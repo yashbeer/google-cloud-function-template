@@ -1,10 +1,10 @@
 const base = (req, res) => {
-  // Your application logic comes here
+  // Application logic for / route
   return res.status(200).json({ code: 200, message: 'This is your base route' })
 }
 
 const hello = (req, res) => {
-  // Your application logic comes here
+  // Application logic for /hello route
   return res.status(200).json({ code: 200, message: 'Hello world' })
 }
 

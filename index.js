@@ -2,25 +2,24 @@ const middleware = require('./middleware')
 const functions = require('./functions')
 
 exports.main = async(req, res) => {
-  middleware(req, res, index) // middleware --> back to index function below
+  middleware(req, res, index) // go inside middleware and then be back here
 }
 
 function index(req, res) {
   // Routes
   switch(req.url.split('/')[1]) {
-    // https://google-cloud-function.com/
-    case '': {
+
+    case '': { // route - /
       functions.base(req, res)
       break
     }
-    // https://google-cloud-function.com/hello
-    case 'hello': {
+    case 'hello': { // route - /hello
       functions.hello(req, res)
       break
     }
-    // https://google-cloud-function.com/no-match
-    default: {
+    default: { // route - when no match (404)
       functions.notFound(req, res)
     }
+
   }
 }

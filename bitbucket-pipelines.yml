@@ -1,0 +1,18 @@
+image: node:16.14.0
+
+options:
+  docker: true
+
+pipelines:
+  branches:
+    master:
+      - step:
+          caches:
+            - docker
+          name: "Deploy to production"
+          image: google/cloud-sdk:latest
+          deployment: production
+          script:
+            - echo $GCP_KEYFILE | base64 --decode > ~/.gcloud-api-key.json
+            - gcloud auth activate-service-account --key-file ~/.gcloud-api-key.json
+            - ./deploy-to-cloud.sh

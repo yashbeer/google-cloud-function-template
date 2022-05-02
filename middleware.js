@@ -1,8 +1,8 @@
 const middleware = async (req, res, next) => {
   try {
-    // console.log('Inside middleware')
-      
-    auth(req, res, next) // call auth
+    /* === Write your middleware logic here === */
+
+    auth(req, res, next)
   }
   catch(e) {
     return res.status(500).json({ error:{code:500, message:'Something went wrong at middleware'} })
@@ -11,9 +11,9 @@ const middleware = async (req, res, next) => {
 
 const auth = async (req, res, next) => {
   try {
-    // console.log('Inside auth')
-      
-    cors(req, res, next) // call cors
+    /* === Write your authentication logic here === */
+
+    cors(req, res, next)
   }
   catch(e) {
     return res.status(401).json({ error:{code:401, message:'Unauthorized Access'} })
@@ -22,17 +22,15 @@ const auth = async (req, res, next) => {
 
 const cors = async (req, res, next) => {
   try {
-    // console.log('Inside cors')
-    
     res.set('Access-Control-Allow-Origin', '*')
+    
     if (req.method === 'OPTIONS') {
-      // Set for OPTIONS requests
-      res.set('Access-Control-Allow-Methods', 'GET')
+      res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
       res.set('Access-Control-Allow-Headers', 'Content-Type')
       res.set('Access-Control-Max-Age', '3600')
     }
     
-    next(req, res) // call index function back
+    next(req, res) // go back to index function
   }
   catch(e) {
     return res.status(500).json({ error:{code:500, message:'Something went wrong at cors'} })
