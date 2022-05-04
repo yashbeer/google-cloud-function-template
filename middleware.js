@@ -1,5 +1,3 @@
-const axios = require('axios')
-
 const middleware = async (req, res, next) => {
   try {
     /* === Write your middleware logic here === */
