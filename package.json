@@ -11,6 +11,7 @@
   "author": "Yashbeer Singh",
   "license": "ISC",
   "dependencies": {
+    "@babel/eslint-parser": "^7.18.9",
     "axios": "^0.21.1"
   },
   "devDependencies": {
