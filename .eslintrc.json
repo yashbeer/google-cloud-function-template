@@ -3,14 +3,20 @@
         "node": true,
         "es2021": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "airbnb-base"
+    ],
     "parser": "@babel/eslint-parser",
     "parserOptions": {
-        "ecmaVersion": "latest"
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "requireConfigFile": false
     },
     "rules": {
-      "semi": ["error", "never"],
-      "quotes": ["error", "single"],
-      "arrow-body-style": "off"
+        "no-console": "off",
+        "max-len": ["error", { "code": 120 }],
+        "comma-dangle": ["error", "never"],
+        "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
     }
 }

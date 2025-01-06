@@ -1,22 +1,25 @@
 {
   "name": "google-cloud-function-template",
   "version": "1.0.0",
-  "description": "",
+  "description": "Production-ready Google Cloud Function Template with routing and middleware",
   "main": "index.js",
   "scripts": {
-    "lint": "npx eslint .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node -r dotenv/config node_modules/@google-cloud/functions-framework/build/src/index.js --target=main --port=8081"
+    "dev": "npx @google-cloud/functions-framework --target=main --port=8081"
   },
   "author": "Yashbeer Singh",
   "license": "ISC",
   "dependencies": {
-    "@babel/eslint-parser": "^7.18.9",
-    "axios": "^0.21.1"
+    "@babel/eslint-parser": "^7.23.10",
+    "axios": "^1.6.7"
   },
   "devDependencies": {
-    "@google-cloud/functions-framework": "^1.7.1",
-    "dotenv": "^16.3.1",
-    "eslint": "^8.11.0"
+    "@google-cloud/functions-framework": "^3.3.0",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1"
   }
 }

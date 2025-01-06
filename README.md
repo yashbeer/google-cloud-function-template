@@ -8,6 +8,33 @@ If you are looking for a boilerplate code for [Google Cloud Function](https://cl
 * Has provision for a basic middleware (like auth and cors)
 * Uses `@google-cloud/functions-framework` for local development
 * Includes deployment script `deploy-to-cloud.sh`
+* Organized project structure with proper separation of concerns
+* Built-in security headers and CORS support
+* Request body parsing and error handling
+
+### Project Structure ###
+
+```
+├── index.js                 # Main entry point
+├── src/                     # Source code directory
+│   ├── controllers/         # Request handlers
+│   │   └── homeController.js
+│   ├── middleware/          # Middleware functions
+│   │   ├── auth.js         # Authentication middleware
+│   │   ├── bodyParser.js   # Request body parser
+│   │   ├── cors.js         # CORS handling
+│   │   ├── index.js        # Middleware orchestration
+│   │   └── securityHeaders.js
+│   ├── routes/             # Route definitions
+│   │   └── index.js        # Router configuration
+│   ├── services/           # Business logic (future use)
+│   └── utils/              # Helper functions
+│       └── middlewareUtils.js
+├── .env.example            # Environment variables template
+├── .eslintrc.json         # ESLint configuration
+├── package.json           # Project dependencies
+└── README.md             # Project documentation
+```
 
 ### How to setup on local? ###
 
@@ -16,6 +43,12 @@ If you are looking for a boilerplate code for [Google Cloud Function](https://cl
 * On your terminal, run this command: `npm install`
 * Then run this command: `npm run dev`
 * That's all! It should be running at `http://localhost:8081/`
+
+### Available Scripts ###
+
+* `npm run dev` - Start local development server
+* `npm run lint` - Run ESLint checks
+* `npm run lint:fix` - Fix ESLint issues automatically
 
 ### How to deploy manually using 'gcloud deploy' script? ###
 
