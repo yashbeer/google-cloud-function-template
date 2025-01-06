@@ -1,6 +1,6 @@
 # Google Cloud Function Template #
 
-If you are looking for a boilerplate code for [Google Cloud Function](https://cloud.google.com/functions/) then you can use this repository.
+If you are looking for a production-ready boilerplate code for [Google Cloud Function](https://cloud.google.com/functions/) then you can use this repository.
 
 ### What can this repository do? ###
 
@@ -18,7 +18,8 @@ If you are looking for a boilerplate code for [Google Cloud Function](https://cl
 ├── index.js                 # Main entry point
 ├── src/                     # Source code directory
 │   ├── controllers/         # Request handlers
-│   │   └── homeController.js
+│   │   ├── homeController.js
+│   │   └── errorController.js
 │   ├── middleware/         # Middleware functions
 │   │   ├── auth.js         # Authentication middleware
 │   │   ├── bodyParser.js   # Request body parser
@@ -27,12 +28,17 @@ If you are looking for a boilerplate code for [Google Cloud Function](https://cl
 │   │   └── securityHeaders.js
 │   ├── routes/             # Route definitions
 │   │   └── index.js        # Router configuration
-│   ├── services/           # Business logic (future use)
+│   ├── services/           # Business logic
 │   └── utils/              # Helper functions
-│       └── middlewareUtils.js
+├── .env                    # Environment variables
 ├── .env.example            # Environment variables template
 ├── .eslintrc.json          # ESLint configuration
+├── .eslintignore           # ESLint ignore patterns
+├── .gitignore              # Git ignore patterns
+├── bitbucket-pipelines.yml # CI/CD configuration
+├── deploy-to-cloud.sh      # Deployment script
 ├── package.json            # Project dependencies
+├── package-lock.json       # Locked dependencies
 └── README.md               # Project documentation
 ```
 
