@@ -9,10 +9,21 @@ pipelines:
       - step:
           caches:
             - docker
-          name: "Deploy to production"
+          name: 'Deploy to production'
           image: google/cloud-sdk:latest
           deployment: production
           script:
-            - echo $GCP_KEYFILE | base64 --decode > ~/.gcloud-api-key.json
+            - echo $GCP_KEYFILE_PROD | base64 --decode > ~/.gcloud-api-key.json
             - gcloud auth activate-service-account --key-file ~/.gcloud-api-key.json
-            - ./deploy-to-cloud.sh
+            - ./deploy-to-cloud.sh $PROJECT_ID_PROD
+    next:
+      - step:
+          caches:
+            - docker
+          name: "Deploy to staging"
+          image: google/cloud-sdk:latest
+          deployment: staging
+          script:
+            - echo $GCP_KEYFILE_STAGING | base64 --decode > ~/.gcloud-api-key.json
+            - gcloud auth activate-service-account --key-file ~/.gcloud-api-key.json
+            - ./deploy-to-cloud.sh $PROJECT_ID_STAGING
