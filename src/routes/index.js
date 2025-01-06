@@ -1,5 +1,6 @@
 const url = require('url');
 const homeController = require('../controllers/homeController');
+const errorController = require('../controllers/errorController');
 const auth = require('../middleware/auth');
 
 class Router {
@@ -44,42 +45,46 @@ class Router {
   /**
    * Execute middleware chain for a route
    */
-  async executeMiddleware(middlewares, req, res) {
+  static async executeMiddleware(middlewares, req, res) {
     let index = 0;
 
     const next = async () => {
       if (index < middlewares.length) {
         const middleware = middlewares[index];
-        index++;
-        await middleware(req, res, next);
+        index += 1;
+        return middleware(req, res, next);
       }
+      return undefined;
     };
 
-    await next();
+    return next();
   }
 
   async handle(req, res) {
     const parsedUrl = url.parse(req.url, true);
     const path = parsedUrl.pathname;
-    
+
     // Add query parameters to request object
     req.query = parsedUrl.query;
-    
+
     // Find the matching route
     const route = this.routes.get(path);
-    
+
     if (route) {
       try {
         // Execute middleware chain if exists
         if (route.middleware.length > 0) {
-          await this.executeMiddleware(route.middleware, req, res);
-          
+          await Router.executeMiddleware(route.middleware, req, res);
+
           // If response is already sent by middleware, don't proceed
-          if (res.headersSent) return;
+          if (res.headersSent) {
+            return undefined;
+          }
         }
-        
+
         // Execute the route handler
-        return route.handler(req, res);
+        await route.handler(req, res);
+        return undefined;
       } catch (error) {
         // Handle any errors in middleware or handler
         console.error('Route Error:', error);
@@ -93,12 +98,14 @@ class Router {
             }
           }));
         }
+        return undefined;
       }
     }
-    
+
     // No route found, return 404
-    return homeController.notFound(req, res);
+    errorController.notFound(req, res);
+    return undefined;
   }
 }
 
-module.exports = new Router(); 
+module.exports = new Router();

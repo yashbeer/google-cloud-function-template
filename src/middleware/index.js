@@ -15,7 +15,7 @@ const middlewareChain = async (req, res, middlewares) => {
     }
 
     const currentMiddleware = middlewares[currentIndex];
-    currentIndex++;
+    currentIndex += 1;
 
     if (currentMiddleware) {
       try {
@@ -24,27 +24,21 @@ const middlewareChain = async (req, res, middlewares) => {
         return handleError(err, res);
       }
     }
+    return undefined;
   };
 
-  await next();
+  return next();
 };
 
-const middleware = async (req, res, next) => {
-  try {
-    await middlewareChain(req, res, [
-      securityHeaders,
-      cors,
-      bodyParser
-      // Add more middleware here if needed
-    ]);
+const middleware = (req, res, next) => {
+  const middlewares = [
+    securityHeaders,
+    cors,
+    bodyParser,
+    next
+  ];
 
-    if (!res.headersSent) {
-      // Once all middleware pass, call the final handler
-      await next(req, res);
-    }
-  } catch (error) {
-    handleError(error, res);
-  }
+  return middlewareChain(req, res, middlewares);
 };
 
-module.exports = middleware; 
+module.exports = middleware;

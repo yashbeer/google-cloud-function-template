@@ -20,5 +20,5 @@ const getStatus = (req, res) => {
 
 module.exports = {
   getBase,
-  getStatus,
-}; 
+  getStatus
+};

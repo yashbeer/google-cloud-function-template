@@ -1,6 +1,6 @@
 const cors = async (req, res, next) => {
   const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : ['*'];
-  const origin = req.headers.origin;
+  const { origin } = req.headers;
 
   // Check if origin is allowed
   if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
@@ -20,4 +20,4 @@ const cors = async (req, res, next) => {
   await next();
 };
 
-module.exports = cors; 
+module.exports = cors;

@@ -1,7 +1,7 @@
 const auth = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
-    
+
     if (!authHeader) {
       const error = new Error('No authorization header');
       error.statusCode = 401;
@@ -13,7 +13,7 @@ const auth = async (req, res, next) => {
     // const token = authHeader.split(' ')[1];
     // const decoded = jwt.verify(token, process.env.JWT_SECRET);
     // req.user = decoded;
-    
+
     await next();
   } catch (error) {
     error.statusCode = error.statusCode || 401;
@@ -22,4 +22,4 @@ const auth = async (req, res, next) => {
   }
 };
 
-module.exports = auth; 
+module.exports = auth;
