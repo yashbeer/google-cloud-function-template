@@ -15,37 +15,56 @@ class Router {
     this.get('/status', homeController.getStatus);
 
     // Protected routes (with auth middleware)
-    this.get('/protected', [auth], homeController.getStatus);
+    this.post('/protected', [auth], homeController.getStatus);
   }
 
   /**
-   * Register a GET route
+   * Register a route with any HTTP method
+   * @param {string} method - HTTP method (GET, POST, PUT, DELETE)
    * @param {string} path - Route path
    * @param {Function|Array} middlewareOrHandler - Middleware array or handler function
    * @param {Function} [handler] - Handler function if middleware provided
    */
-  get(path, middlewareOrHandler, handler) {
+  route(method, path, middlewareOrHandler, handler) {
+    const routeKey = `${method}:${path}`;
     if (Array.isArray(middlewareOrHandler)) {
       // If middleware array is provided
-      this.routes.set(path, {
-        method: 'GET',
+      this.routes.set(routeKey, {
+        method,
         middleware: middlewareOrHandler,
         handler
       });
     } else {
       // If only handler is provided
-      this.routes.set(path, {
-        method: 'GET',
+      this.routes.set(routeKey, {
+        method,
         middleware: [],
         handler: middlewareOrHandler
       });
     }
   }
 
+  // Methods for common HTTP verbs
+  get(path, middlewareOrHandler, handler) {
+    return this.route('GET', path, middlewareOrHandler, handler);
+  }
+
+  post(path, middlewareOrHandler, handler) {
+    return this.route('POST', path, middlewareOrHandler, handler);
+  }
+
+  put(path, middlewareOrHandler, handler) {
+    return this.route('PUT', path, middlewareOrHandler, handler);
+  }
+
+  delete(path, middlewareOrHandler, handler) {
+    return this.route('DELETE', path, middlewareOrHandler, handler);
+  }
+
   /**
    * Execute middleware chain for a route
    */
-  static async executeMiddleware(middlewares, req, res) {
+  static async executeMiddleware(middlewares, req, res, finalHandler) {
     let index = 0;
 
     const next = async () => {
@@ -54,7 +73,7 @@ class Router {
         index += 1;
         return middleware(req, res, next);
       }
-      return undefined;
+      return finalHandler(req, res);
     };
 
     return next();
@@ -67,44 +86,31 @@ class Router {
     // Add query parameters to request object
     req.query = parsedUrl.query;
 
-    // Find the matching route
-    const route = this.routes.get(path);
+    // Find the matching route using method and path
+    const routeKey = `${req.method}:${path}`;
+    const route = this.routes.get(routeKey);
 
     if (route) {
       try {
         // Execute middleware chain if exists
         if (route.middleware.length > 0) {
-          await Router.executeMiddleware(route.middleware, req, res);
-
-          // If response is already sent by middleware, don't proceed
-          if (res.headersSent) {
-            return undefined;
-          }
+          await Router.executeMiddleware(route.middleware, req, res, route.handler);
+        } else {
+          await route.handler(req, res);
         }
-
-        // Execute the route handler
-        await route.handler(req, res);
-        return undefined;
       } catch (error) {
-        // Handle any errors in middleware or handler
-        console.error('Route Error:', error);
-        if (!res.headersSent) {
-          res.statusCode = error.statusCode || 500;
-          res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({
-            error: {
-              code: error.statusCode || 500,
-              message: error.message || 'Internal Server Error'
-            }
-          }));
-        }
-        return undefined;
+        res.statusCode = error.statusCode || 500;
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({
+          error: {
+            code: error.statusCode || 500,
+            message: error.message || 'Internal Server Error'
+          }
+        }));
       }
+    } else {
+      errorController.notFound(req, res);
     }
-
-    // No route found, return 404
-    errorController.notFound(req, res);
-    return undefined;
   }
 }
 

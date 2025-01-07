@@ -1,26 +1,25 @@
-const bodyParser = async (req, res, next) => {
-  if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
-    const buffers = [];
+const bodyParser = require('body-parser');
 
-    req.on('data', (chunk) => {
-      buffers.push(chunk);
-    });
+// Create a middleware that combines JSON and urlencoded parsers
+const parser = [
+  bodyParser.json(),
+  bodyParser.urlencoded({ extended: true })
+];
 
-    await new Promise((resolve, reject) => {
-      req.on('end', resolve);
-      req.on('error', reject);
-    });
-
-    const data = Buffer.concat(buffers).toString();
-
-    try {
-      req.body = data ? JSON.parse(data) : {};
-    } catch (error) {
-      throw new Error('Invalid JSON body');
-    }
+// Wrapper middleware to handle multiple body parsers
+const parseBody = async (req, res, next) => {
+  try {
+    // Execute all parsers in parallel using Promise.all
+    await Promise.all(parser.map((parse) => new Promise((resolve, reject) => {
+      parse(req, res, (err) => {
+        if (err) reject(err);
+        resolve();
+      });
+    })));
+    next();
+  } catch (error) {
+    next(error);
   }
-
-  await next();
 };
 
-module.exports = bodyParser;
+module.exports = parseBody;
