@@ -13,7 +13,6 @@
         "requireConfigFile": false
     },
     "rules": {
-        "no-console": "off",
         "max-len": ["error", { "code": 120 }],
         "comma-dangle": ["error", "never"],
         "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
