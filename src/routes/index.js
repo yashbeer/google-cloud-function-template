@@ -18,12 +18,27 @@ class Router {
     this.post('/protected', [auth], homeController.getStatus);
   }
 
-  /**
+  /*
+   * Methods for common HTTP verbs
+   */
+  get(path, middlewareOrHandler, handler) {
+    return this.route('GET', path, middlewareOrHandler, handler);
+  }
+
+  post(path, middlewareOrHandler, handler) {
+    return this.route('POST', path, middlewareOrHandler, handler);
+  }
+
+  put(path, middlewareOrHandler, handler) {
+    return this.route('PUT', path, middlewareOrHandler, handler);
+  }
+
+  delete(path, middlewareOrHandler, handler) {
+    return this.route('DELETE', path, middlewareOrHandler, handler);
+  }
+
+  /*
    * Register a route with any HTTP method
-   * @param {string} method - HTTP method (GET, POST, PUT, DELETE)
-   * @param {string} path - Route path
-   * @param {Function|Array} middlewareOrHandler - Middleware array or handler function
-   * @param {Function} [handler] - Handler function if middleware provided
    */
   route(method, path, middlewareOrHandler, handler) {
     const routeKey = `${method}:${path}`;
@@ -42,23 +57,6 @@ class Router {
         handler: middlewareOrHandler
       });
     }
-  }
-
-  // Methods for common HTTP verbs
-  get(path, middlewareOrHandler, handler) {
-    return this.route('GET', path, middlewareOrHandler, handler);
-  }
-
-  post(path, middlewareOrHandler, handler) {
-    return this.route('POST', path, middlewareOrHandler, handler);
-  }
-
-  put(path, middlewareOrHandler, handler) {
-    return this.route('PUT', path, middlewareOrHandler, handler);
-  }
-
-  delete(path, middlewareOrHandler, handler) {
-    return this.route('DELETE', path, middlewareOrHandler, handler);
   }
 
   /**
